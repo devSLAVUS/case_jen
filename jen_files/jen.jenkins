@@ -1,27 +1,19 @@
 #!groovy
-// Check ds1 properties
-properties([disableConcurrentBuilds()])
-
-pipeline {
-    agent { 
-        label 'master'
+node {    
+      def app     
+      stage('Clone repository') {               
+             
+            checkout scm    
+      }           stage('Build image') {         
+       
+            app = docker.build("brandonjones085/test")    
+       }           stage('Test image') {                       app.inside {            
+             
+             sh 'echo "Tests passed"'        
+            }    
+        }            stage('Push image') {
+                                                  docker.withRegistry('https://registry.hub.docker.com', 'git') {                   app.push("${env.BUILD_NUMBER}")            
+       app.push("latest")        
+              }    
+           }
         }
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
-        timestamps()
-    }
-    stages {
-        stage("First step") {
-            steps {
-               checkout scm
-               sh "chmod +x -R ${env.WORKSPACE}"
-               sh "jen_files/prep.sh"
-            }
-        }
-        stage("Second step") {
-            steps {
-                sh 'ssh root@ds1 \'uptime\''
-            }
-        }
-    }
-}
