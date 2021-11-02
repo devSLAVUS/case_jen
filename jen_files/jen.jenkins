@@ -21,7 +21,7 @@ pipeline {
             }
         }
     stages {
-        stage("First step") {
+        stage("docker build") {
             steps {
             echo " ============== start building image =================="
                 dir ('my-first-blog/') {
@@ -29,10 +29,14 @@ pipeline {
                 }
             }
         }
-        stage("Second step") {
+   stage("docker push") {
             steps {
-                sh 'ssh root@ds1 \'uptime\''
+                echo " ============== start pushing image =================="
+                sh '''
+                docker push semaev/toolbox:latest
+                '''
             }
         }
+        
     }
 }
