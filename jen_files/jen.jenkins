@@ -10,7 +10,8 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
         timestamps()
     }
-    stage("docker login") {
+    stages {
+         stage("docker login") {
             steps {
                 echo " ============== docker login =================="
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
@@ -20,7 +21,6 @@ pipeline {
                 }
             }
         }
-    stages {
         stage("docker build") {
             steps {
             echo " ============== start building image =================="
