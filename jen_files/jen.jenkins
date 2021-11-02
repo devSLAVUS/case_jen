@@ -6,7 +6,7 @@ node {
          checkout scm    
       }           stage('Build image') {         
        
-            app = docker.build("brandonjones085/test")    
+            app = docker.build("case_jen/my-first-blog/")    
        }           
       stage('Test image') 
       { 
