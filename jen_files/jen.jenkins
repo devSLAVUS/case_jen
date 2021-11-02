@@ -4,9 +4,11 @@ node {
       stage('Clone repository') {               
              
          checkout scm    
-      }           stage('Build image') {         
+      }           stage('Build image') {
+            dir("my-first-blog/"){
        
-            app = docker.build("case_jen/my-first-blog/")    
+                app = docker.build("case_jen/my-first-blog")   
+            }
        }           
       stage('Test image') 
       { 
