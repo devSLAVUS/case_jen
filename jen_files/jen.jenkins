@@ -1,26 +1,27 @@
 #!groovy
-node {    
-      def app     
-      stage('Clone repository') {               
-             
-         checkout scm    
-      }           stage('Build image') {
-            dir("my-first-blog/"){
-       
-                app = docker.build("case_jen/my-first-blog")   
-            }
-       }           
-      stage('Test image') 
-      { 
-            app.inside 
-       {            
-             
-             sh 'echo "Tests passed"'        
-            }    
-        }            
-      stage('Push image') {
-docker.withRegistry('https://registry.hub.docker.com', 'git') { app.push("${env.BUILD_NUMBER}")            
-app.push("latest")        
-              }    
-           }
+// Check ds1 properties
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent { 
+        label 'master'
         }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timestamps()
+    }
+    stages {
+        stage("First step") {
+            steps {
+echo " ============== start building image =================="
+                dir ('my-first-blog/') {
+                	sh 'docker build -t mfblog/toolbox:latest . '
+            }
+        }
+        stage("Second step") {
+            steps {
+                sh 'ssh root@ds1 \'uptime\''
+            }
+        }
+    }
+}
