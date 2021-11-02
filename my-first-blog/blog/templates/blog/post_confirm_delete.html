@@ -1,0 +1,31 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+<div class="cposts">
+    <div class="blockquote text-center">
+        <div class="posts">
+            <div class="left-padding">
+                <div class="text-left">
+                    <div class="post_title">{{ post.title }}
+                    </div>
+                </div>
+                    <form method="POST">{% csrf_token %}
+                    <div class="delete-popup">
+                        <p> Are you sure?</p>
+                        <p><button class="btn btn-outline-danger mr-2" type="submit">DELETE POST</button>
+                        <a class="btn btn-outline-secondary" href="{% url 'post_detail' pk=post.pk %}">Cancel</a></p>
+                    </div>
+                    </form>
+                <div class="text">
+                    <p>{{ post.text|linebreaksbr|urlize }}</p>
+                </div>
+                <div class="date">          
+                    <p><b> — {{ post.author|default_if_none:"Anonymous User"}}</b><div class="time">{{ post.published_date|date:"j F Y @ h:i A" }}
+                    ({{ post.published_date|timesince }} ago)</div></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

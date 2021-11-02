@@ -1,0 +1,58 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<div class="cposts">
+    <div class="text-center">
+        <div class="compose" style="text-decoration: none;"><a href="{% url 'post_new' %}">Hi, <b>{{request.user}}!</b></a></div>
+    </div>
+</div>
+{% endif %}
+
+{% for post in posts %}
+
+
+<div class="cposts">
+    <div class="blockquote text-center">
+        <div class="posts">
+            <div class="left-padding">
+            	<div class="text-left" onclick="location.href='{% url 'post_detail' pk=post.pk %}';" style="cursor: pointer;">
+                    <div class="post_title">{{ post.title|upper }}</div><div class="post_no">#{{ post.pk }}</div>
+                </div>
+                <div class="text">
+                    <p>{{ post.text|truncatechars:200|linebreaksbr|urlize }}</p>
+                </div>
+                {% if post.text|length > 200 %}
+                <div class="read-more" onclick="location.href='{% url 'post_detail' pk=post.pk %}';" style="cursor: pointer;">
+                    <a href="{% url 'post_detail' pk=post.pk %}" title="Open Post"><i>Read remaining {{ post.text|wordcount }} words...</i></a>
+                </div>
+                {% endif %}
+                <div class="date">        	
+                    <p><b> — {{ post.author|default_if_none:"Anonymous User"}} {% if post.author.is_staff %}<span class="mod-badge">ADMIN</span>{% endif %}</b>
+                        <div class="time">{{ post.published_date|date:"j F Y, h:i A" }}
+                    ({{ post.published_date|timesince }} ago)
+
+                    {% if post.comments.count < 1 %}
+                    <div class="comment-count">
+                                <a class="btn btn-outline-primary" href="{% url 'post_detail' pk=post.pk %}">Add Comment</a>
+                    </div>
+                    {% elif post.comments.count == 1 %}
+                    <div class="comment-count">
+                                <a class="btn btn-outline-primary" href="{% url 'post_detail' pk=post.pk %}">{{ post.comments.count }} Comment</a>
+                    </div>
+                    {% elif post.comments.count > 1 %}
+                    
+                    <div class="comment-count">
+                                <a class="btn btn-outline-primary" href="{% url 'post_detail' pk=post.pk %}">{{ post.comments.count }} Comments</a>
+                    </div>
+                    {% endif %}
+                    </div>
+                </div></p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
