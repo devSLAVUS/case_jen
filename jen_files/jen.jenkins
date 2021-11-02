@@ -15,7 +15,7 @@ pipeline {
             steps {
             echo " ============== start building image =================="
                 dir ('my-first-blog/') {
-                	sh 'docker build -t mfblog/my-first-blog:latest . '
+                	sh 'docker build -t devslavus/my-first-blog:latest . '
                 }
             }
         }
