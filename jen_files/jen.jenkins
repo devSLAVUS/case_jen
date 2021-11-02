@@ -33,7 +33,7 @@ pipeline {
             steps {
                 echo " ============== start pushing image =================="
                 sh '''
-                docker push devslavus//my-first-blog:latest
+                docker push devslavus/my-first-blog:latest
                 '''
             }
         }
