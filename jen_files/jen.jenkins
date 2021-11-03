@@ -55,10 +55,10 @@ pipeline {
                 ssh root@ds1 'docker login -u $USERNAME -p $PASSWORD'
                 '''
                 sh '''
-                ssh root@ds1 '\'bash -s\' < inst.sh'
+                ssh root@ds1 '\'bash -s\' < case_jen/jen_files/inst.sh'
                 '''
                 sh '''
-                ssh root@ds1 '\'bash -s\' < rndock.sh'
+                ssh root@ds1 '\'bash -s\' < case_jen/jen_files/rndock.sh'
                 '''
                 }
             }
