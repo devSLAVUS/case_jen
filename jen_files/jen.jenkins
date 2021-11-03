@@ -43,15 +43,18 @@ pipeline {
    stage("run docker") {
             steps {
                 echo " ============== prepare host =================="
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh "chmod +x -R ${env.WORKSPACE}"
                     dir ('jen_files/') {     
                         
                 sh '''
                 ssh root@ds1 'bash -s' < inst.sh
                 '''      
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                sh '''
-                ssh root@ds1 'bash -s' < rndock.sh
+                    sh """
+                    echo $USERNAME 
+                    echo $PASSWORD
+                    ssh root@ds1 docker login --username $USERNAME --password $PASSWORD
+                    ssh root@ds1 'bash -s' < rndock.sh
                 '''
                 }
                     }
