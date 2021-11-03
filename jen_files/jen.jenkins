@@ -49,10 +49,10 @@ pipeline {
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'dockerhub',
                 usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
                 sh '''
-                ssh root@ds1 'docker login -u devslavus -p a5ll8v07mf#@'
+                ssh root@ds1 'docker login -u devslavus -p $PASSWORD'
                 '''        
                 sh '''
-                ssh root@ds1 '\'bash -s\' < rndock.sh'
+                ssh root@ds1 'bash -s' < rndock.sh
                 '''
                 }
                     }
