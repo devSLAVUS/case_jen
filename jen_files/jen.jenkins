@@ -37,6 +37,13 @@ pipeline {
                 '''
             }
         }
-        
+   stage("prepare host") {
+            steps {
+                echo " ============== prepare host =================="
+                sh '''
+                ssh root@ds1 '\'bash -s\' < inst.sh'
+                '''
+            }
+        }
     }
 }
