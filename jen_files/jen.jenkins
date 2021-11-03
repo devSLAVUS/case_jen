@@ -51,8 +51,7 @@ pipeline {
                 ssh root@ds1 'bash -s' < inst.sh    
                     echo $USERNAME 
                     echo $PASSWORD
-                    ssh root@ds1 docker login --username $USERNAME --password $PASSWORD
-                    ssh root@ds1 'bash -s' < rndock.sh
+                    ssh root@ds1 docker login --username $USERNAME --password $PASSWORD; docker pull devslavus/my-first-blog; docker run --name mfb -d -p 80:80 my-first-blog:latest
                 '''
                 }
                     }
