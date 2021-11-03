@@ -42,7 +42,7 @@ pipeline {
                 echo " ============== prepare host =================="
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh "chmod +x -R ${env.WORKSPACE}"
-                sh 'pwd'    
+                sh './inst.sh'    
                 sh '''
                 ssh root@ds1 '\'bash -s\' < case_jen/jen_files/inst.sh'
                 '''
