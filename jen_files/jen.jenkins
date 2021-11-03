@@ -42,7 +42,7 @@ pipeline {
                 echo " ============== prepare host =================="
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                 sh "chmod +x -R ${env.WORKSPACE}"
-                    dir ('my-first-blog/') {
+                    dir ('jen_files/') {
                 sh './inst.sh'    
                     
                 sh '''
