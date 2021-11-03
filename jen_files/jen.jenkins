@@ -60,7 +60,7 @@ pipeline {
                 ssh root@prodstage 'bash -s' < inst.sh    
                     echo $USERNAME 
                     echo $PASSWORD
-                    ssh -t root@prodstage "hostname; docker login --username $USERNAME --password $PASSWORD; docker run --name myfb -d -p 80:80 devslavus/my-first-blog:latest"
+                    ssh -t root@prodstage "hostname; docker login --username $USERNAME --password $PASSWORD; docker pull devslavus/my-first-blog; docker run --name myfb -d -p 80:80 devslavus/my-first-blog:latest"
                 '''
                 }
                     }
