@@ -37,15 +37,6 @@ pipeline {
                 '''
             }
         }
-   stage("prepare host") {
-            steps {
-                echo " ============== prepare host =================="
-                sh "chmod +x -R ${env.WORKSPACE}"
-                sh '''
-                ssh root@ds1 '\'bash -s\' < inst.sh'
-                '''
-            }
-        }
    stage("run docker") {
             steps {
                 echo " ============== prepare host =================="
@@ -55,7 +46,12 @@ pipeline {
                 ssh root@ds1 'docker login -u $USERNAME -p $PASSWORD'
                 '''
                 sh 'pwd'    
-              
+                sh '''
+                ssh root@ds1 '\'bash -s\' < case_jen/jen_files/inst.sh'
+                '''
+                sh '''
+                ssh root@ds1 '\'bash -s\' < case_jen/jen_files/rndock.sh'
+                '''
                 }
             }
         }
