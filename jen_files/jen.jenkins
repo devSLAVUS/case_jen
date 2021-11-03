@@ -48,9 +48,7 @@ pipeline {
                     dir ('jen_files/') {     
                         
                 sh '''
-                ssh root@ds1 'bash -s' < inst.sh
-                '''      
-                    sh """
+                ssh root@ds1 'bash -s' < inst.sh    
                     echo $USERNAME 
                     echo $PASSWORD
                     ssh root@ds1 docker login --username $USERNAME --password $PASSWORD
