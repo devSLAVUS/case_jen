@@ -9,6 +9,15 @@ else
    apt update
    apt install -y git
 fi
+name="curl"
+I=`dpkg -s $name | grep "Status" `
+if [ -n "$I" ]
+then
+   echo $name" installed"
+else
+   echo $name" not installed"
+   apt install -y curl
+fi
 name="docker-ce"
 I=`dpkg -s $name | grep "Status" `
 if [ -n "$I" ]
@@ -20,5 +29,5 @@ else
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
    apt update
-   apt install docker-ce
+   apt install -y docker-ce
 fi
