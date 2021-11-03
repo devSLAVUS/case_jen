@@ -44,7 +44,7 @@ pipeline {
                 sh "chmod +x -R ${env.WORKSPACE}"
                     dir ('jen_files/') {      
                 sh '''
-                ssh root@ds1 '\'bash -s\' < inst.sh'
+                ssh root@ds1 'bash -s' < inst.sh
                 '''
                 sh '''
                 ssh root@ds1 'docker login -u $USERNAME -p $PASSWORD'
