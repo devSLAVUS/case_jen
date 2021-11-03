@@ -60,6 +60,7 @@ pipeline {
                 sh '''
                 ssh root@ds1 '\'bash -s\' < rndock.sh'
                 '''
+                }
             }
         }
     }
