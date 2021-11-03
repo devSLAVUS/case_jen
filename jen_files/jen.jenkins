@@ -48,10 +48,10 @@ pipeline {
                     dir ('jen_files/') {     
                         
                 sh '''
-                ssh root@ds1 'bash -s' < inst.sh    
+                ssh root@prodstage 'bash -s' < inst.sh    
                     echo $USERNAME 
                     echo $PASSWORD
-                    ssh -t root@ds1 "hostname; docker login --username $USERNAME --password $PASSWORD; docker run --name myfb -d -p 80:80 devslavus/my-first-blog:latest"
+                    ssh -t root@prodstage "hostname; docker login --username $USERNAME --password $PASSWORD; docker run --name myfb -d -p 80:80 devslavus/my-first-blog:latest"
                 '''
                 }
                     }
