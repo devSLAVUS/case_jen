@@ -40,6 +40,15 @@ pipeline {
                 '''
             }
         }
+   stage('del image') {
+            steps {
+                sh '''
+                ssh -t root@prodstage "hostname; docker login --username $USERNAME --password $PASSWORD; docker stop myfb; docker rm myfb; docker rmi devslavus/my-first-blog:latest"
+                '''
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh "exit 1"
+                }
+            }     
    stage("run docker") {
             steps {
                 echo " ============== prepare host =================="
@@ -51,7 +60,6 @@ pipeline {
                 ssh root@prodstage 'bash -s' < inst.sh    
                     echo $USERNAME 
                     echo $PASSWORD
-                    ssh -t root@prodstage "hostname; docker login --username $USERNAME --password $PASSWORD; docker stop myfb; docker rm myfb; docker rmi devslavus/my-first-blog:latest"
                     ssh -t root@prodstage "hostname; docker login --username $USERNAME --password $PASSWORD; docker run --name myfb -d -p 80:80 devslavus/my-first-blog:latest"
                 '''
                 }
