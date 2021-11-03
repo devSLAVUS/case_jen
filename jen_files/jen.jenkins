@@ -44,7 +44,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh '''
-                ssh -t root@prodstage "hostname; docker login --username $USERNAME --password $PASSWORD; docker stop myfb; docker rm myfb; docker rmi devslavus/my-first-blog:latest"
+                ssh -t root@prodstage "hostname; docker login --username $USERNAME --password $PASSWORD; docker stop myfb; docker rm myfb"
                 '''
                 }
             } 
